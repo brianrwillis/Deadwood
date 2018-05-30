@@ -7,9 +7,14 @@ import javafx.scene.control.*;
 import javafx.scene.effect.*;
 import javafx.scene.input.*;
 import java.lang.*;
-import javafx.event.* ;
+import javafx.event.*;
+import javafx.embed.swing.JFXPanel;
 
 public class Display extends Application{
+    final JFXPanel fxPanel = new JFXPanel();
+    private Button button1 = new Button();
+    private Button button2 = new Button();
+    private Label output = new Label();
 
     public Display() {
     }
@@ -38,7 +43,6 @@ public class Display extends Application{
 
         //~~~~~~~~~Labels~~~~~~~~~//
         //Main output
-        Label output = new Label();
         output.setLayoutX(WINDOW_WIDTH/2-boardImageView.getBoundsInParent().getWidth()/2);
         output.setLayoutY(WINDOW_HEIGHT/2+boardImageView.getBoundsInParent().getHeight()/2);
         output.setMinWidth(boardImageView.getBoundsInParent().getWidth()/2);
@@ -49,50 +53,51 @@ public class Display extends Application{
 
         //~~~~~~~~~Buttons~~~~~~~~~//
         //Move button
-        Button moveButton = new Button("Move");
-        moveButton.setMaxSize(100, 200);
-        moveButton.setStyle("-fx-font: 16 arial;");
+        button1.setMaxSize(100, 200);
+        button1.setStyle("-fx-font: 16 arial;");
         //Position
-        moveButton.setLayoutX(WINDOW_WIDTH/2+boardImageView.getBoundsInParent().getWidth()/2+10);
-        moveButton.setLayoutY(WINDOW_HEIGHT/2-boardImageView.getBoundsInParent().getHeight()/2);
+        button1.setLayoutX(WINDOW_WIDTH/2+boardImageView.getBoundsInParent().getWidth()/2+10);
+        button1.setLayoutY(WINDOW_HEIGHT/2-boardImageView.getBoundsInParent().getHeight()/2);
+        //Initialize as invisible
+        button1.setVisible(false);
 
         //Work button
-        Button workButton = new Button("Work");
-        workButton.setMaxSize(100, 200);
-        workButton.setStyle("-fx-font: 16 arial;");
+        button2.setMaxSize(100, 200);
+        button2.setStyle("-fx-font: 16 arial;");
         //Position
-        workButton.setLayoutX(WINDOW_WIDTH/2+boardImageView.getBoundsInParent().getWidth()/2+10);
-        workButton.setLayoutY(WINDOW_HEIGHT/2-boardImageView.getBoundsInParent().getHeight()/2+40);
+        button2.setLayoutX(WINDOW_WIDTH/2+boardImageView.getBoundsInParent().getWidth()/2+10);
+        button2.setLayoutY(WINDOW_HEIGHT/2-boardImageView.getBoundsInParent().getHeight()/2+40);
+        button2.setVisible(false);
 
         //Create button effects
         DropShadow shadow = new DropShadow();
         //Move button hover shadow
-        moveButton.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+        button1.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
-                moveButton.setEffect(shadow);
+                button1.setEffect(shadow);
             }
         });
-        moveButton.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+        button1.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
-                moveButton.setEffect(null);
+                button1.setEffect(null);
             }
         });
 
         //Work button hover shadow
-        workButton.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+        button2.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
-                workButton.setEffect(shadow);
+                button2.setEffect(shadow);
             }
         });
-        workButton.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+        button2.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
-                workButton.setEffect(null);
+                button2.setEffect(null);
             }
         });
 
         //Create button actions
         //Move button
-        moveButton.setOnAction(new EventHandler<ActionEvent>() {
+        button1.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 output.setStyle("-fx-border-color: blue; -fx-font: 14 arial;");
                 output.setText("Move");
@@ -100,7 +105,7 @@ public class Display extends Application{
         });
 
         //Work button
-        workButton.setOnAction(new EventHandler<ActionEvent>() {
+        button2.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 output.setStyle("-fx-border-color: red; -fx-font: 14 arial;");
                 output.setText("Work");
@@ -110,8 +115,8 @@ public class Display extends Application{
 
         //Create scene
         root.getChildren().add(boardImageView);
-        root.getChildren().add(moveButton);
-        root.getChildren().add(workButton);
+        root.getChildren().add(button1);
+        root.getChildren().add(button2);
         root.getChildren().add(output);
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -119,6 +124,13 @@ public class Display extends Application{
         stage.setScene(scene);
 
         stage.show();
+    }
+    public int getMoveChoice(){
+        output.setText("Please select action.");
+        button1.setText("Move");
+        button2.setText("Work");
+        //use ActionEvent?
+        return 0;
     }
 
     public void launchDisplay(){
