@@ -30,7 +30,7 @@ public class Deadwood {
 
         //Make interfaces
         PlayerSpotPrinter playerSpotPrinter = new PlayerSpotPrinter();
-        Display display = new Display(players, board);
+        //Display display = new Display(players, board);
 
         //Get player names
         String[] playerNames = new String[playerCnt];
@@ -68,7 +68,7 @@ public class Deadwood {
             
             //delete:
                 System.out.println("\r\nPlayer stats:");        //Print out player info each turn
-                display.dispPlayers();
+                //display.dispPlayers();
                 //controller.updatePlayerDisplay();
             
             //delete:
@@ -126,10 +126,10 @@ public class Deadwood {
                         }
                         players.getCurrent().changeLocation(moveSel - 1);     //Update user's location
                         int roomNum=moveSel-1;
-                        Room currToRoom=this.board.getRoom(roomNum);
-                        SceneCard currToCard=currToRoom.getCard();
-                        if(!currToCard.isFlipped()){
-                           currToCard.flip();
+                        //Room currToRoom=this.board.getRoom(roomNum).getCard().isFlipped;
+                        //SceneCard currToCard=currToRoom.getCard();
+                        if(!board.getRoom(roomNum).getCard().isFlipped()){
+                           board.getRoom(roomNum).getCard().flip();
                            //controller.flipCard(roomNum);
                            }
 
@@ -296,7 +296,7 @@ public class Deadwood {
                                 }
 
                                 if (!workSucc) {   
-                                    controller.displayRoleError();
+                                    //controller.displayRoleError();
                                     
                                 //delete
                                     System.out.println("Role unavailable.");
@@ -321,7 +321,7 @@ public class Deadwood {
                               //delete:
                                 System.out.println("You have enough rehearse markers to guarantee success. Time to act!");
                                 
-                                controller.displayForceAct();
+                                //controller.displayForceAct();
                                 workSel = 1;    //Force player to act
                             }
                         }
@@ -383,7 +383,7 @@ public class Deadwood {
         }
    //delete:
         System.out.println("\r\nAll days completed!");
-        display.dispPlayers();
+        //display.dispPlayers();
         
         //controller.updatePlayerDisplay();
 
