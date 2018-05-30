@@ -8,6 +8,7 @@ class SceneCard {
     private String picName;
     private ArrayList<PlayerSpot> players;
     int sceneNum;
+    boolean flipped;
 
     //Returns true if card is active
     public boolean isActive() {
@@ -31,6 +32,17 @@ class SceneCard {
     public int getCost() {
         return this.sceneCost;
     }
+    
+    public void flip(){
+      this.flipped=true;
+      }
+    public void unFlip(){
+      this.flipped=false;
+      }
+      
+    public boolean isFlipped(){
+      return this.flipped;
+      }    
 
     public void resetCard() {//takes all players off of player spots, active is back to false
         for (int i = 0; i < players.size(); i++) {

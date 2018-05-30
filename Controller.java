@@ -160,5 +160,15 @@ public class Controller{
       //display.endDay();
       }
       
+   public void displayCards(){//show all cards face down
+      //display.Cards()
+      }    
+      
+   public void flipCard(int i){
+      Room curr=this.board.getRoom(i);   
+      SceneCard currSC=curr.getCard();
+      String picName=currSC.getPicName();
+      //display.flipCard(i, picName); //i is index of room. picName is String of file name.
+      }
                
 }

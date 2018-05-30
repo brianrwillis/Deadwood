@@ -52,6 +52,7 @@ class Deck {
     public void reset() {//iterates through deck and resets each card
         while (!this.activeCard.isEmpty()) {
             SceneCard curr = this.activeCard.get(0);
+            curr.unFlip();
             curr.deActive();
             this.activeCard.remove(0);
         }

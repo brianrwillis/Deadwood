@@ -62,6 +62,7 @@ public class Deadwood {
                 SceneCard currCard = deck.getTopofOrder();
                 currRoom.addCard(currCard);
             }
+            //current.displayCards();
             //Day loop
             while (currentDay) {
             
@@ -124,6 +125,13 @@ public class Deadwood {
                             }
                         }
                         players.getCurrent().changeLocation(moveSel - 1);     //Update user's location
+                        int roomNum=moveSel-1;
+                        Room currToRoom=this.board.getRoom(roomNum);
+                        SceneCard currToCard=currToRoom.getCard();
+                        if(!currToCard.isFlipped()){
+                           currToCard.flip();
+                           //controller.flipCard(roomNum);
+                           }
 
 
                         if (players.getCurrent().getLocation() == 10) {           //User moved to Trailers
