@@ -64,9 +64,13 @@ public class Deadwood {
             }
             //Day loop
             while (currentDay) {
+            
+            //delete:
                 System.out.println("\r\nPlayer stats:");        //Print out player info each turn
                 display.dispPlayers();
-
+                //controller.updatePlayerDisplay();
+            
+            //delete:
                 //Prompt for user action
                 System.out.println("\r\n" + players.getCurrent().getName() + "'s turn: Please select action.");
                 System.out.println("1: Move\r\n2: Work");
@@ -74,17 +78,21 @@ public class Deadwood {
                 //Test action validity
                 int actionSel = -1;
                 while (actionSel == -1) {
+                    //actionSel=controller.getMoveChoice();
                     actionSel = getNumInput(1, 2);
                     int currLoc = players.getCurrent().getLocation();
                     Room currentSet = board.getRoom(players.getCurrent().getLocation());
                     SceneCard currCard = currentSet.getCard();
                     if ((actionSel == 2) && ((currLoc == 10) || currLoc == 11)) {
+                        //controller.displayTrailerOfficeError();
                         System.out.println("Cannot work while in the Trailers or Office.");
                         actionSel = -1;
                     } else if ((actionSel == 2) && (!currCard.isActive() || !players.getCurrent().onCard())) {
+                        //controller.displayNotEnrollError();
                         System.out.println("Cannot work while not enrolled.");
                         actionSel = -1;
                     } else if ((actionSel == 1) && players.getCurrent().onCard()) {
+                        //controller.displayCantMoveError();
                         System.out.println("Cannot move while enrolled.");
                         actionSel = -1;
                     }
@@ -92,6 +100,8 @@ public class Deadwood {
 
                 switch (actionSel) {
                     case (1):        //Move
+                    
+                    //delete:
                         //Prompt user move choice
                         System.out.println("Choose move location:");
                         for (int i = 0; i < 12; i++) {
@@ -104,10 +114,12 @@ public class Deadwood {
                         while (!moveValid) {
                             moveSel = -1;
                             while (moveSel == -1) {
+                                //moveSel=controller.getLocation();
                                 moveSel = getNumInput(1, 12);
                             }
                             moveValid = board.getRoom(players.getCurrent().getLocation()).isAdjacent(board.getRoom(moveSel - 1).getName());
                             if (!moveValid) {
+                                 //controller.displayLocationError();
                                 System.out.println("Choose an adjacent location.");
                             }
                         }
@@ -120,19 +132,23 @@ public class Deadwood {
                             boolean upgradeSucc = false;
                             while (!upgradeSucc) {
                                 //Prompt upgrade amount
+                            //delete:
                                 System.out.println("Upgrade how many ranks?");
 
                                 //Get upgrade choice
                                 int upgradeNumSel = -1;
                                 while (upgradeNumSel == -1) {
                                     upgradeNumSel = getNumInput(1, 5);
+                                    //upgradeNumSel=controller.getUpgradeChoice();
                                     if ((players.getCurrent().getRank() + upgradeNumSel) > 6) {
+                                        //controller.displayRankChoiceError();
                                         System.out.println("You can only upgrade to a max rank of 6.");
                                         upgradeNumSel = -1;
                                     }
                                 }
                                 int newRank = players.getCurrent().getRank() + upgradeNumSel;
-
+                     
+                     //delete:
                                 //Prompt upgrade spend type
                                 System.out.println("Upgrade with money or fame?");
                                 System.out.println("1: Money\r\n2: Fame\r\n3: Don't upgrade");
@@ -140,6 +156,7 @@ public class Deadwood {
                                 //Test spend choice validity
                                 int upgradeSel = -1;
                                 while (upgradeSel == -1) {
+                                    //upgradeSel=controller.getUpgradeType();
                                     upgradeSel = getNumInput(1, 3);
                                 }
 
@@ -166,6 +183,7 @@ public class Deadwood {
                                             break;
                                     }
                                     if (players.getCurrent().getCredit() < moneyCost) {
+                                       //controller.displayMoneyError(1);
                                         System.out.println("Not enough money to perform upgrade.");
                                         upgradeSucc = false;
                                     } else {
@@ -196,6 +214,7 @@ public class Deadwood {
                                             break;
                                     }
                                     if (players.getCurrent().getFame() < fameCost) {
+                                        //controller.displayMoneyError(2);
                                         System.out.println("Not enough fame to perform upgrade.");
                                         upgradeSucc = false;
                                     } else {
@@ -214,7 +233,9 @@ public class Deadwood {
                             SceneCard currentCard = currentSet.getCard();
                             ArrayList<PlayerSpot> spotsOn = currentCard.getRanksOnCard();
                             ArrayList<PlayerSpot> spotsOff = currentSet.getRanksOffCard();
+                            //controller.displayOptions(spotsOn, spotsOff);
 
+                     //delete: 
                             System.out.println("On card:");
                             playerSpotPrinter.print(spotsOn, players.getCurrent());
                             System.out.println("Off card:");
@@ -222,6 +243,8 @@ public class Deadwood {
 
                             boolean workSucc = false;
                             while (!workSucc) {
+                            
+                            //delete:
                                 //Prompt card choice
                                 System.out.println("Take a role on card or off card?");
                                 System.out.println("1: On card\r\n2: Off card\r\n3: Take no role");
@@ -229,6 +252,7 @@ public class Deadwood {
                                 //Get user's card choice
                                 int cardChoiceSel = -1;
                                 while (cardChoiceSel == -1) {
+                                    //cardChoiceSel=controller.getOnOffCard();
                                     cardChoiceSel = getNumInput(1, 3);
                                 }
 
@@ -249,6 +273,7 @@ public class Deadwood {
                                 int roleChoiceSel = -1;
                                 while (roleChoiceSel == -1) {
                                     roleChoiceSel = getNumInput(1, spotsSize);
+                                    //roleChoiceSel=controller.getRoleChoice();
                                 }
 
                                 //Add user to roll
@@ -262,7 +287,10 @@ public class Deadwood {
                                     players.getCurrent().putFromCard();
                                 }
 
-                                if (!workSucc) {
+                                if (!workSucc) {   
+                                    controller.displayRoleError();
+                                    
+                                //delete
                                     System.out.println("Role unavailable.");
                                 }
                             }
@@ -271,14 +299,21 @@ public class Deadwood {
 
                     case (2):        //Work
                         //Act or rehearse prompt
+                        
+                        
+                     //delete:
                         System.out.println("Act or rehearse?");
                         System.out.println("1: Act\r\n2: Rehearse");
 
                         int workSel = -1;
                         while (workSel == -1) {
                             workSel = getNumInput(1, 2);
+                            //workSel=controller.getActRehearse();
                             if ((workSel == 2) && (players.getCurrent().getRehearse() + players.getCurrent().getRank() >= 6)) {  //No need for more rehearse markers
+                              //delete:
                                 System.out.println("You have enough rehearse markers to guarantee success. Time to act!");
+                                
+                                controller.displayForceAct();
                                 workSel = 1;    //Force player to act
                             }
                         }
@@ -304,11 +339,19 @@ public class Deadwood {
                                 currentSet.reset();
                                 currCard.resetCard();
                                 active.trimToSize();
+                                //controller.sceneWrap(currentSet);
+                             
+                             //delete:   
                                 System.out.println("Scene Wrapped! Cards remaining on the board: " + active.size());
+                                
                                 if (active.size() == 1) {   //Complete day
                                     currentDay = false;
                                     daysLeft--;
+                                    //controller.endDay();
+                                 
+                                 //delete:   
                                     System.out.println("Day Completed! Days Remaining: " + daysLeft);
+                                    //controller.updateDayCount();
                                 }
                             }
                         } else { //Rehearse
@@ -330,12 +373,15 @@ public class Deadwood {
             currentDay = true;
             moderator.advanceDay();
         }
-
+   //delete:
         System.out.println("\r\nAll days completed!");
         display.dispPlayers();
+        
+        //controller.updatePlayerDisplay();
 
         Player winner = calculator.calcWinner(playersOrdered);          //Display winner
         System.out.println("\r\nWinner: " + winner.getName() + "!");
+        //controller.displayWinner(winner.getName());
 
         System.out.println("\r\nThank you for playing!\r\n");
     }

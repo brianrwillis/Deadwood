@@ -8,6 +8,7 @@ public class Controller{
       this.players=players;
       this.board=board;
       //this.display=new Display();
+      //this.display.launchDisplay();
    }
    
    public void updatePlayerDisplay(){
@@ -21,9 +22,9 @@ public class Controller{
       }
    }
    
-   public int getTurnChoice(){
+   public int getMoveChoice(){//1=move, 2=work
       int i=0;
-      //i=display.getTurnChoice;
+      //i=display.getMoveChoice();
       return i;
    }
       
@@ -43,9 +44,9 @@ public class Controller{
       //display.LocationError();
    }
    
-   public int getLocation(){
+   public int getLocation(){//0 to 11. Index of room on board. 
       int i=0;
-      //i=display.getLocation;
+      //i=display.getLocation();
       return i;
    }    
    
@@ -53,13 +54,13 @@ public class Controller{
        //display.RankChoiceError();
    }
    
-   public int getUpgradeChoice(){
+   public int getUpgradeChoice(){//1-6
       int i=0;
       //i=display.getUpgradeChoice();
       return i;
    }
    
-   public int getUpgradeType(){
+   public int getUpgradeType(){//1=money, 2=fame, 3=dont upgrade
       int i=0;
       //i=display.getUpgradeType();
       return i;
@@ -75,7 +76,7 @@ public class Controller{
       //display.Winner(winner);
    }
       
-   public int getOnOffCard(){
+   public int getOnOffCard(){//1=onCard, 2=offCard, 3=not enroll
       int i=0;
       //display.getOnOffCard();
       return i;
@@ -124,7 +125,7 @@ public class Controller{
       //display.showSpotChoice(onCard, offCard);
    }
    
-   public int getRoleChoice(){
+   public int getRoleChoice(){//integer of index in the arrayList of strings.
       int i=0;
       //i=display.getRoleChoice();
       return i;
@@ -134,9 +135,30 @@ public class Controller{
       //display.RoleError();
       }
       
-   public int getActRehearse(){
+   public int getActRehearse(){//1=act, 2=rehearse
       int i=0;
       //i=display.getActRehearse();
       return i;
       }    
+      
+   public void displayForceWork(){
+     // display.ForceWork();
+       }
+   
+   public void sceneWrap(Room room){
+      String rName=room.getName();
+      for(int i=0; i<11; i++){
+         Room curr=this.board.getRoom(i);
+         String currName=curr.getName();
+         if(rName.equals(currName)){
+            //display.clearCard(i);
+            }
+       }  
+      }
+      
+   public void endDay(){
+      //display.endDay();
+      }
+      
+               
 }
