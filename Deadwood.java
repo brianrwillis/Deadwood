@@ -15,77 +15,15 @@ public class Deadwood extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws ParserConfigurationException, InterruptedException {
+    public void start(Stage stage) throws InterruptedException {
         display.displayInit();
 
         stage.setTitle("Deadwood");
         stage.setScene(display.getScene());
         stage.show();
-
-
-        Task getInput = new Task<Void>() {
-            @Override
-            public Void call() throws Exception {
-                while (true) {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            display.getOutput().setText(display.getOutputText());       //Display message
-                        }
-                    });
-                    synchronized (display.inputThread) {
-                        display.inputThread.wait();                                     //Wait for input
-                    }
-                }
-            }
-        };
-        display.inputThread = new Thread(getInput);
-        display.inputThread.setDaemon(true);             //Allow program to exit if thread is still running
-        display.inputThread.start();
     }
 
-//        int playerCnt = 0;
-//        try {
-//            playerCnt = Integer.parseInt(display.getInputText());
-//            display.getOutput().setText(display.getInputText());
-//            display.getOutput().setStyle("-fx-border-color: green;");
-//        } catch (Exception e) {
-//            display.getOutput().setText("Non-number. Please try again.");
-//            display.getOutput().setStyle("-fx-border-color: red;");
-//        }
-//        Players players = new Players(playerCnt);           //Make players
-//        players.shuffle();                                  //Randomize player order
-//        Players playersOrdered = players;                   //Store starting order of players for calculating winner later
-
-        //Make model classes
-//        Deck deck = new Deck();
-//        Board board = new Board();
-
-        //Make controller classes
-//        Moderator moderator = new Moderator(players, deck, board);
-//        Calculator calculator = new Calculator(players);
-
 /*
-        //Get player names
-        String[] playerNames = new String[playerCnt];
-        for (int i = 0; i < playerCnt; i++) {
-            System.out.println("Player " + (i + 1) + "'s name?");
-            playerNames[i] = keyboard.nextLine();
-            while (playerNames[i] == null) {
-            }                 //Blocking code: wait for user input
-        }
-        players.addPlayers(playerNames);
-
-        int[] rules = calculator.calcRules(playerCnt);      //Calculate starting parameters
-        int daysLeft = rules[2];                            //Set remaining days
-
-        //Set player starting attributes
-        ArrayList<Player> playersList = players.getPlayers();
-        for (int i = 0; i < playerCnt; i++) {
-            moderator.giveFunds(playersList.get(i), 0, rules[1]);
-            moderator.increaseRank(playersList.get(i), rules[0] - 1);
-        }
-
         //Game loop
         boolean gameOngoing = true;
         boolean currentDay = true;
