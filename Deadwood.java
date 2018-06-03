@@ -1,37 +1,71 @@
-import java.util.*;
-import javax.xml.parsers.*;
+import javafx.stage.*;
 
-public class Deadwood {
+import javax.xml.parsers.*;
+import javafx.application.*;
+import javafx.concurrent.*;
+
+public class Deadwood extends Application {
+    private static Display display = new Display();
+
     public Deadwood() {
     }
 
-    public static void main(String[] args) throws ParserConfigurationException {
-        Scanner keyboard = new Scanner(System.in);
+    public static void main(String[] args) {
+        launch();   //Start the game
+    }
 
-        System.out.println("Welcome to Deadwood. Number of players?");
+    @Override
+    public void start(Stage stage) throws ParserConfigurationException, InterruptedException {
+        display.displayInit();
 
-        //Get number of players
-        int playerCnt = -1;
-        while (playerCnt == -1) {
-            playerCnt = getNumInput(2, 8);
-        }
+        stage.setTitle("Deadwood");
+        stage.setScene(display.getScene());
+        stage.show();
 
-        Players players = new Players(playerCnt);           //Make players
-        players.shuffle();                                  //Randomize player order
-        Players playersOrdered = players;                   //Store starting order of players for calculating winner later
+
+        Task getInput = new Task<Void>() {
+            @Override
+            public Void call() throws Exception {
+                while (true) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            display.getOutput().setText(display.getOutputText());       //Display message
+                        }
+                    });
+                    synchronized (display.inputThread) {
+                        display.inputThread.wait();                                     //Wait for input
+                    }
+                }
+            }
+        };
+        display.inputThread = new Thread(getInput);
+        display.inputThread.setDaemon(true);             //Allow program to exit if thread is still running
+        display.inputThread.start();
+    }
+
+//        int playerCnt = 0;
+//        try {
+//            playerCnt = Integer.parseInt(display.getInputText());
+//            display.getOutput().setText(display.getInputText());
+//            display.getOutput().setStyle("-fx-border-color: green;");
+//        } catch (Exception e) {
+//            display.getOutput().setText("Non-number. Please try again.");
+//            display.getOutput().setStyle("-fx-border-color: red;");
+//        }
+//        Players players = new Players(playerCnt);           //Make players
+//        players.shuffle();                                  //Randomize player order
+//        Players playersOrdered = players;                   //Store starting order of players for calculating winner later
 
         //Make model classes
-        Deck deck = new Deck();
-        Board board = new Board();
+//        Deck deck = new Deck();
+//        Board board = new Board();
 
         //Make controller classes
-        Moderator moderator = new Moderator(players, deck, board);
-        Calculator calculator = new Calculator(players);
+//        Moderator moderator = new Moderator(players, deck, board);
+//        Calculator calculator = new Calculator(players);
 
-        //Make interfaces
-        PlayerSpotPrinter playerSpotPrinter = new PlayerSpotPrinter();
-        //Display display = new Display(players, board);
-
+/*
         //Get player names
         String[] playerNames = new String[playerCnt];
         for (int i = 0; i < playerCnt; i++) {
@@ -75,6 +109,12 @@ public class Deadwood {
                 //Prompt for user action
                 System.out.println("\r\n" + players.getCurrent().getName() + "'s turn: Please select action.");
                 System.out.println("1: Move\r\n2: Work");
+
+                //NEW
+                display.getOutput().setText("Please select action.");
+                display.getMoveButton().setVisible(true);
+                display.getWorkButton().setVisible(true);
+                //NEW
 
                 //Test action validity
                 int actionSel = -1;
@@ -393,28 +433,5 @@ public class Deadwood {
 
         System.out.println("\r\nThank you for playing!\r\n");
     }
-
-
-    //Helper function
-    //getNumInput: Prompts for user input and returns number input or -1 if error
-    private static int getNumInput(int lowerB, int upperB) {
-        Scanner keyboard = new Scanner(System.in);
-
-        String userNumInput = keyboard.nextLine();
-        while (userNumInput == null) {
-        }      //Blocking code: wait for user input
-
-        try {
-            int userNum = Integer.parseInt(userNumInput);
-            if (userNum >= lowerB && userNum <= upperB) {
-                return userNum;
-            } else {
-                System.out.println("Out of bounds. Please try again.");
-                return -1;
-            }
-        } catch (Exception e) {
-            System.out.println("Non-number. Please try again.");
-            return -1;
-        }
-    }
+    */
 }
