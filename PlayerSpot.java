@@ -6,21 +6,27 @@ class PlayerSpot {
     private int maxOccupants;
     private String partName;
     private String line;
+    private PSpotHolder pSpotHolder;
     public PlayerSpot() {
         this.NeededRank = 0;
         this.maxOccupants = 1;
         this.onCard = new ArrayList<Player>(1);
         this.partName = null;
         this.line = null;
+        this.pSpotHolder=new PSpotHolder();
     }
 
     //Adds player spot to board
     public void AddToPlayerSpot(int rank, String partName) {
         this.NeededRank = rank;
         this.partName = partName;
+        this.pSpotHolder.setNeededRank(Integer.toString(rank));
+        this.pSpotHolder.setPartName(partName);        
 
     }
-
+   public PSpotHolder getPSpot(){
+      return this.pSpotHolder;
+      }
 
     public void AddToPlayerSpot(String line) {//makes line into line
         this.line = line;

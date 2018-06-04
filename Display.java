@@ -11,6 +11,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.*;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 public class Display {
     private static Button moveButton;
@@ -29,7 +47,7 @@ public class Display {
     private static int playerCnt;
     private static String[] playerNames;
     private static int playerNamesCnt = 0;
-    private static TableView stats;
+    private static TableView<Person> stats;
     private static TableView onCard;
     private static TableView offCard;
     private static Players players = null;
@@ -37,6 +55,7 @@ public class Display {
     private static Board board = null;
     private static Moderator moderator = null;
     private static Calculator calculator = null;
+
 
     public enum PState {
         PLAYER_CNT,
@@ -51,7 +70,7 @@ public class Display {
     public Display() {
     }
 
-    public void displayInit() throws InterruptedException {
+    public void displayInit() throws InterruptedException, ParserConfigurationException {
         final int BOARD_HEIGHT = 900;
         final int WINDOW_WIDTH = 1800;
         final int WINDOW_HEIGHT = 1000;
@@ -167,56 +186,85 @@ public class Display {
 
 
         //~~~~~~~~~~Stats~~~~~~~~~~//
-        //       ObservableList<Player> data =
-        //             FXCollections.observableArrayList();
+        Player p1=new Player("Sam1");
+        Player p2=new Player("Sam2");
+        Person pp1=p1.getPerson();
+        Person pp2=p2.getPerson();
+               ObservableList<Person> data1 = FXCollections.observableArrayList(pp1, pp2);
         //       ArrayList<Player> pList=this.players.getPlayers();
         //       for(int i=0; i<pList.size();i++){
         //          data.add(pList.get(i));
         //          }
-        stats=new TableView();
+        p1.setRank(3);
+        p2.setCredit(5);
+        stats=new TableView<Person>();
         stats.setEditable(true);
         TableColumn PNameCol=new TableColumn("Name");
-        PNameCol.setCellValueFactory(new PropertyValueFactory<Player, String>("name"));
+        PNameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("firstName"));
         TableColumn PCreditCol=new TableColumn("Credits");
-        PCreditCol.setCellValueFactory(new PropertyValueFactory<Player, String>("credit"));
+        PCreditCol.setCellValueFactory(new PropertyValueFactory<Person, String>("credit"));
         TableColumn PFameCol=new TableColumn("Fame");
-        PFameCol.setCellValueFactory(new PropertyValueFactory<Player, String>("fame"));
+        PFameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("fame"));
         TableColumn PRankCol=new TableColumn("Rank");
-        PRankCol.setCellValueFactory(new PropertyValueFactory<Player, String>("rank"));
-        //stats.setItems(data);
-        //stats.getColumns().addAll(PNameCol, PCreditCol, PFameCol, PRankCol);
-        stats.setLayoutX(WINDOW_WIDTH-200);
-        stats.setLayoutY(WINDOW_HEIGHT/2-boardImageView.getBoundsInParent().getHeight()/2);
+        PRankCol.setCellValueFactory(new PropertyValueFactory<Person, String>("rank"));
+        TableColumn PRehearCol=new TableColumn("Rehearsals");
+        PRehearCol.setCellValueFactory(new PropertyValueFactory<Person, String>("rehearsals"));
+        stats.setLayoutX(0);
+        stats.setLayoutY(0);
         stats.setMinWidth(100);
         stats.setMinHeight(100);
+        stats.setMaxWidth(300);
+        stats.setItems(data1);
+        stats.getColumns().addAll(PNameCol, PCreditCol, PFameCol, PRankCol, PRehearCol);        
 
 
         //~~~~~~~~~~On Card Roles~~~~~~~~~~//Need to make object with Number, Rank, Availability and Name from ArrayList of PlayerSpots.
-        onCard=new TableView();
-        onCard.setEditable(true);
-        TableColumn OnNum=new TableColumn("Number");
-        TableColumn OnRank=new TableColumn("Rank");
-        TableColumn OnAvail=new TableColumn("Availability");
-        TableColumn OnName=new TableColumn("Name");
-        onCard.setLayoutX(WINDOW_WIDTH-200);
-        onCard.setLayoutY(WINDOW_HEIGHT/2-boardImageView.getBoundsInParent().getHeight()/2+100);
-        onCard.setMinWidth(100);
-        onCard.setMinHeight(100);
-        onCard.getColumns().addAll(OnNum, OnRank, OnAvail, OnName);
+//         final Label onCardLabel=new Label("On Card Roles:");
+//         //onCardLabel.setFont(new Font("Times New Roman", 15));
+//         VBox onCardBox=new VBox();
+//         onCard=new TableView();
+//         onCard.setEditable(true);
+//         TableColumn OnNum=new TableColumn("Number");
+//         TableColumn OnRank=new TableColumn("Rank");
+//         TableColumn OnAvail=new TableColumn("Availability");
+//         TableColumn OnName=new TableColumn("Name");
+//         onCardBox.setLayoutX(300);
+//         onCardBox.setLayoutY(300);
+//         onCard.setMinWidth(100);
+//         onCard.setMinHeight(100);
+//         onCard.getColumns().addAll(OnNum, OnRank, OnAvail, OnName);
+//         onCardBox.setSpacing(5);
+//         onCardBox.setPadding(new Insets(10, 0, 0, 10));
+//         onCardBox.getChildren().addAll(onCardLabel, onCard);
+//         onCardBox.setVisible(true);
+         Board tester=new Board();
+         Deck dTester=new Deck();
+         Room RTest=tester.getRoom(0);
+         RTest.addCard(dTester.getTopofOrder());
+         CardTableMaker pTester= new CardTableMaker();
+         TableView onCard=pTester.getOnCard(tester, 0);
+         TableView offCard=pTester.getOffCard(tester, 0);
+         onCard.setVisible(true);
+         onCard.setLayoutX(0);
+         onCard.setLayoutY(400);        
+         onCard.setMaxHeight(200); 
 
 
         //~~~~~~~~~Off Card Roles~~~~~~~~~//Need to make object with Number, Rank, Availability and Name from ArrayList of PlayerSpots.
-        offCard=new TableView();
-        offCard.setEditable(true);
-        TableColumn OffNum=new TableColumn("Number1");
-        TableColumn OffRank=new TableColumn("Rank");
-        TableColumn OffAvail=new TableColumn("Availability");
-        TableColumn OffName=new TableColumn("Name");
-        offCard.setLayoutX(WINDOW_WIDTH-200);
-        offCard.setLayoutY(WINDOW_HEIGHT/2-boardImageView.getBoundsInParent().getHeight()/2+200);
-        offCard.setMinWidth(100);
-        offCard.setMinHeight(100);
-        offCard.getColumns().addAll(OffNum, OffRank, OffAvail, OffName);
+        final Label offCardLabel=new Label("Off Card Roles:");
+        //offCardLabel.setFont(new Font("Times New Roman", 15));        
+//         offCard=new TableView();
+//         offCard.setEditable(true);
+//         TableColumn OffNum=new TableColumn("Number1");
+//         TableColumn OffRank=new TableColumn("Rank");
+//         TableColumn OffAvail=new TableColumn("Availability");
+//         TableColumn OffName=new TableColumn("Name");
+        offCard.setLayoutX(0);
+        offCard.setLayoutY(600);
+        //offCard.setMinWidth(100);
+        offCard.setMaxHeight(200);
+//         offCard.getColumns().addAll(OffNum, OffRank, OffAvail, OffName);
+//         offCard.setVisible(false);
 
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~Begin Button Making~~~~~~~~~~~~~~~~~~~~~~~~~~//
@@ -457,14 +505,14 @@ public class Display {
         //~~~~~~~~~~~~~~~~~~~~~~~~~~End Button Making~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
         //Oscar testing block
-        ObservableList<Player> data =
-                FXCollections.observableArrayList();
+        //ObservableList<Player> data =
+        //        FXCollections.observableArrayList();
         //ArrayList<Player> pList=this.players.getPlayers();
         //for(int i=0; i<pList.size();i++){
         //   data.add(pList.get(i));
         //   }
-        stats.setItems(data);
-        stats.getColumns().addAll(PNameCol, PCreditCol, PFameCol, PRankCol);
+        //stats.setItems(data);
+        //stats.getColumns().addAll(PNameCol, PCreditCol, PFameCol, PRankCol);
 
         //Create scene
         root.getChildren().add(boardImageView);
@@ -476,6 +524,8 @@ public class Display {
         root.getChildren().add(offCardButton);
         root.getChildren().add(noRoleButton);
         root.getChildren().add(onCard);
+        //root.getChildren().add(onCard);
+
         root.getChildren().add(offCard);
         root.getChildren().add(output);
         root.getChildren().add(input);
