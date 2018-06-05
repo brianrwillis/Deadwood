@@ -228,9 +228,10 @@ public class Display {
                                  //                                     currPlayerTable.getColumns().addAll(currPCol);
                                     currPlayerTable.setLayoutX(0);
                                     currPlayerTable.setLayoutY(800);
-                                    currPlayerTable.setMaxWidth(200);
-                                    currPlayerTable.setMinWidth(199);
-                                    currPlayerTable.setMaxHeight(50);
+                                    currPlayerTable.setMaxWidth(201);
+                                    currPlayerTable.setMinWidth(200);
+                                    currPlayerTable.setMaxHeight(101);
+                                    currPlayerTable.setMinHeight(100);
                                     currPCol.setMinWidth(198);
                                     currPCol.setMaxWidth(199);
                                     currPlayerTable.setVisible(true);
@@ -515,7 +516,7 @@ public class Display {
                                     moveButton.setVisible(false);                       //Deactivate buttons
                                     workButton.setVisible(false);
                                     doNothingButton.setVisible(false);
-                                    System.out.println("Act or rehearse?");
+                                    output.setText("Act or rehearse?");
                                     output.setStyle("-fx-border-color: green;");
                                     actButton.setVisible(true);
                                     rehearseButton.setVisible(true);

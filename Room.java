@@ -24,7 +24,7 @@ class Room {
         this.adjacent = adjacent;
         PlayerSpot forAll = new PlayerSpot();
         forAll.AddToPlayerSpot(8, null);
-        addCardInfo();
+        //addCardInfo();
         this.TakeX=new ArrayList<Integer>();
         this.TakeY=new ArrayList<Integer>();        
     }
