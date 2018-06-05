@@ -6,32 +6,45 @@ class PlayerSpot {
     private int maxOccupants;
     private String partName;
     private String line;
-    private PSpotHolder pSpotHolder;
+    int xVal;
+    int yVal;
     public PlayerSpot() {
         this.NeededRank = 0;
         this.maxOccupants = 1;
         this.onCard = new ArrayList<Player>(1);
         this.partName = null;
         this.line = null;
-        this.pSpotHolder=new PSpotHolder();
     }
 
     //Adds player spot to board
     public void AddToPlayerSpot(int rank, String partName) {
         this.NeededRank = rank;
         this.partName = partName;
-        this.pSpotHolder.setNeededRank(Integer.toString(rank));
-        this.pSpotHolder.setPartName(partName);        
 
     }
-   public PSpotHolder getPSpot(){
-      return this.pSpotHolder;
-      }
+
 
     public void AddToPlayerSpot(String line) {//makes line into line
         this.line = line;
     }
-
+    //adds x coord of spot location
+    public void addXVal(int x){
+      this.xVal=x;
+      }
+    //returns x coord of spot location  
+    public int getXVal(){
+      return this.xVal;
+      }
+    
+    //adds y coord of spot location  
+    public void addYVal(int y){
+      this.yVal=y;
+      }
+      
+    //returns y coord of spot location  
+    public int getYVal(){
+      return this.yVal;
+      }
     public boolean addPlayer(Player player) {//checks if player can be added, adds and returns true if possible
         if (this.onCard.size() < this.maxOccupants && player.getRank() >= this.NeededRank) {
             onCard.add(player);
