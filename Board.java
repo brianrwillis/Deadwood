@@ -95,10 +95,21 @@ class Board {
                         Node firstTake = takes.item(q);
                         if ("take".equals(firstTake.getNodeName())) {
                             toReturn++;
+                            NodeList take=firstTake.getChildNodes();
+                            for(int f=0;f<take.getLength();f++){
+                              Node lastTake=take.item(f);
+                              if("area".equals(lastTake.getNodeName())){
+                                 String xCoorStr=lastTake.getAttributes().getNamedItem("x").getNodeValue();
+                                 int xCoord=Integer.parseInt(xCoorStr);
+                                 currSet.addTakeX(xCoord);
+                                 String yCoorStr=lastTake.getAttributes().getNamedItem("y").getNodeValue();
+                                 int yCoord=Integer.parseInt(yCoorStr);
+                                 currSet.addTakeY(yCoord);}
+                             }
                         }
                     }
                     currSet.setTakes(toReturn);
-                } else if ("parts".equals(sub.getNodeName())) {
+                }  if ("parts".equals(sub.getNodeName())) {
                     NodeList parts = sub.getChildNodes();
                     ArrayList<PlayerSpot> currSpotList = new ArrayList<PlayerSpot>(1);
                     for (int x = 0; x < parts.getLength(); x++) {
@@ -121,6 +132,15 @@ class Board {
                                     currPS.AddToPlayerSpot(line);
                                     //System.out.println("Line:" +line);
                                 }
+                                if("area".equals(CurrSpotSubNode.getNodeName())){
+                                    String xStr=CurrSpotSubNode.getAttributes().getNamedItem("x").getNodeValue();
+                                    int xInt=Integer.parseInt(xStr);
+                                    currPS.addXVal(xInt);
+                                    String yStr=CurrSpotSubNode.getAttributes().getNamedItem("y").getNodeValue();
+                                    int yInt=Integer.parseInt(yStr);
+                                    currPS.addYVal(yInt);  
+                                    }                                  
+                                    
                             }
                         }
                     }

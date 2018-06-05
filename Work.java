@@ -25,11 +25,11 @@ class Work {
         //Roll and see if player advances the scene
         int roll = RandomNum(1, 6);
         int total = roll + currentP.getRehearse();
-        System.out.println("You need to roll a " + budget + " to advance a scene.");
-        System.out.println("You rolled a " + roll + "! With your rehearsal tokens you have " + total + ".");
+        //System.out.println("You need to roll a " + budget + " to advance a scene.");
+        //System.out.println("You rolled a " + roll + "! With your rehearsal tokens you have " + total + ".");
         if (total >= budget) {
             location.adjustTakes();
-            System.out.println("You have successfully advanced the scene!");
+            //System.out.println("You have successfully advanced the scene!");
             if (on) {
                 currentP.setFame(2);
             }
@@ -38,7 +38,7 @@ class Work {
                 currentP.setCredit(1);
             }
         } else {
-            System.out.println("You did not roll high enough to advance the scene.");
+            //System.out.println("You did not roll high enough to advance the scene.");
             if (!on) {
                 currentP.setCredit(1);
             }

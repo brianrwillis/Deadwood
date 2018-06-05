@@ -4,11 +4,13 @@ class Players {
     private ArrayDeque<Player> list;
     private ArrayList<Player> nonQList;
     private int size;
+    private CurrPlayer currPlayer;
 
     public Players(int a) {
         this.list = new ArrayDeque<Player>();
         this.nonQList = new ArrayList<Player>(a);
         this.size = a;
+        this.currPlayer=new CurrPlayer();
     }
 
     public void addPlayers(String[] playerList) {//makes a new player for each string in playerList
@@ -29,6 +31,10 @@ class Players {
             this.list.addFirst(pList.get(i));
             pList.remove(i);
         }
+        Player curr=this.list.getFirst();
+        String name=curr.getName();
+        this.currPlayer.setCurrPlayer(name);
+        //this.currPlayer.setCurrPlayer(list.peek().getName());
 
     }
 
@@ -39,7 +45,11 @@ class Players {
     public Player nextCurrent() {//places current at end of queue, return new top
         Player last = this.list.poll();
         this.list.addLast(last);
+        Player curr=this.list.getFirst();
+        String name=curr.getName();
+        this.currPlayer.setCurrPlayer(name);
         return this.list.getFirst();
+        
     }
 
     public void reset() {//places each player back at the trailers
@@ -57,7 +67,8 @@ class Players {
     public ArrayList<Player> getPlayers() {//returns arrayList of player
         return this.nonQList;
     }
-
+    public CurrPlayer getCurrPlayer(){
+      return this.currPlayer;}
 
     //RandomNum:
     //in: int a int b

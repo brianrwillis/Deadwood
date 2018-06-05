@@ -66,6 +66,7 @@ class Player {
 
     public void changeLocation(int newLocation) {//changes player location
         this.location = newLocation;
+        this.person.setLocation(Integer.toString(newLocation+1));
     }
 
     //Returns location of player
@@ -82,6 +83,7 @@ class Player {
     //Sets rehearse markers of player to 0
     public void resetRehearse() {
         this.rehearse = 0;
+        this.person.setRehearsals("0");
     }
 
     //Returns rehearse markers of player
@@ -97,11 +99,13 @@ class Player {
     //Removes player from card
     public void remFromCard() {
         this.onCard = false;
+        this.person.setEnrolled("F");
     }
 
     //Puts player on card
     public void putFromCard() {
         this.onCard = true;
+        this.person.setEnrolled("T");
     }
     
     public Person getPerson(){

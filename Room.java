@@ -3,12 +3,19 @@ import java.util.*;
 class Room {
     String RoomName;
     private ArrayList<String> adjacent;
+    int xVal;
+    int yVal;
+    ArrayList<Integer> TakeX;
+    ArrayList<Integer> TakeY;
 
     public Room() {
         this.RoomName = null;
         this.adjacent = null;
         PlayerSpot forAll = new PlayerSpot();
         forAll.AddToPlayerSpot(8, null);
+        this.TakeX=new ArrayList<Integer>();
+        this.TakeY=new ArrayList<Integer>();
+        
     }
 
     //Create room with neighbors
@@ -17,8 +24,23 @@ class Room {
         this.adjacent = adjacent;
         PlayerSpot forAll = new PlayerSpot();
         forAll.AddToPlayerSpot(8, null);
+        addCardInfo();
+        this.TakeX=new ArrayList<Integer>();
+        this.TakeY=new ArrayList<Integer>();        
     }
-
+    public void addTakeX(int x){
+      this.TakeX.add(x);
+     }
+    public void addTakeY(int y){
+      this.TakeY.add(y);
+      }
+    public ArrayList<Integer> getXTakes(){
+      return this.TakeX;
+      }
+    public ArrayList<Integer> getYTakes(){
+      return this.TakeY;
+      }      
+    
     public String getName() {//returns name of room
         return this.RoomName;
     }
@@ -36,8 +58,65 @@ class Room {
     //Change a room's name
     public void ChangeRoom(String name) {
         this.RoomName = name;
+        addCardInfo();
     }
-
+//    0, Train Station
+//    1, Secret Hideout
+//    2, Church
+//    3, Hotel
+//    4, Main Street
+//    5, Jail
+//    6, General Store
+//    7, Ranch
+//    8, Bank
+//    9, Saloon
+//    10, Trailers
+//    11, Casting Office
+    //Applies the correct xVal and yVal depending on the name of the room. 
+    //cards are 205 pixels wide, 115 pixels high on a board with width 1200 and height 900.
+    public void addCardInfo(){
+      if(this.RoomName.equals("Train Station")){
+         this.xVal=20;
+         this.yVal=70;}
+      else if(this.RoomName.equals("Secret Hideout")){
+         this.xVal=30;
+         this.yVal=730;}
+      else if(this.RoomName.equals("Church")){
+         this.xVal=620;
+         this.yVal=730;}
+      else if(this.RoomName.equals("Hotel")){
+         this.xVal=970;
+         this.yVal=740;}
+      else if(this.RoomName.equals("Main Street")){
+         this.xVal=970;
+         this.yVal=30;}
+      else if(this.RoomName.equals("Jail")){
+         this.xVal=280;
+         this.yVal=30;}
+      else if(this.RoomName.equals("General Store")){
+         this.xVal=370;
+         this.yVal=280;}
+      else if(this.RoomName.equals("Ranch")){
+         this.xVal=250;
+         this.yVal=480;}
+      else if(this.RoomName.equals("Bank")){
+         this.xVal=620;
+         this.yVal=475;}
+      else if(this.RoomName.equals("Saloon")){
+         this.xVal=630;
+         this.yVal=280;}
+      else{
+         this.xVal=0;
+         this.yVal=0;}
+         }         
+    //returns value of x coordinate at top left corner of card location     
+    public int getXVal(){
+      return this.xVal;}
+      
+    //returns value of x coordinate at top left corner of card location           
+    public int getYVal(){
+      return this.yVal;}     
+      
     //Getting a card handled by Set.java
     public SceneCard getCard() {
         return null;

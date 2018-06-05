@@ -40,7 +40,7 @@ public class CardTableMaker{//Creates and returns tables of playerspots given th
       ObservableList<PSpotHolder> data1 = FXCollections.observableArrayList();
       for(int i=0; i<rList.size();i++){
          PlayerSpot curr=rList.get(i);
-         curr.getPSpot().setNumber(Integer.toString(i));
+         curr.getPSpot().setNumber(Integer.toString(i+1));
          data1.addAll(curr.getPSpot());
       }
       TableView table=new TableView<PSpotHolder>();
@@ -64,8 +64,8 @@ public class CardTableMaker{//Creates and returns tables of playerspots given th
       table.setLayoutY(400);        
       table.setMaxHeight(200); 
       table.getColumns().addAll(big);
-      table.setMaxWidth(300);
-      table.setMinWidth(300);
+      table.setMaxWidth(302);
+      table.setMinWidth(301);
       return table;
    }
       
@@ -79,7 +79,7 @@ public class CardTableMaker{//Creates and returns tables of playerspots given th
       ObservableList<PSpotHolder> data1 = FXCollections.observableArrayList();
       for(int i=0; i<rList.size();i++){
          PlayerSpot curr=rList.get(i);
-         curr.getPSpot().setNumber(Integer.toString(i));
+         curr.getPSpot().setNumber(Integer.toString(i+1));
          data1.addAll(curr.getPSpot());
       }
       TableView table=new TableView<PSpotHolder>();
@@ -100,8 +100,8 @@ public class CardTableMaker{//Creates and returns tables of playerspots given th
       table.setItems(data1);
       big.getColumns().addAll(PNum, PNameCol, PRankCol);
       table.getColumns().addAll(big);
-      table.setMaxWidth(300);
-      table.setMinWidth(300);
+      table.setMaxWidth(302);
+      table.setMinWidth(301);
       table.setLayoutX(0);
       table.setLayoutY(600);
       table.setMaxHeight(200);      

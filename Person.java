@@ -10,6 +10,8 @@ public  class Person {//Class that holds properties of Player to ease importing 
    private final SimpleStringProperty fame;
    private final SimpleStringProperty credit;
    private final SimpleStringProperty rehearsals;
+   private final SimpleStringProperty location;
+   private final SimpleStringProperty enrolled;
    
 
    public Person(String fName, String rank, String fame, String credit, String rehearsals) {//Constructor
@@ -18,8 +20,22 @@ public  class Person {//Class that holds properties of Player to ease importing 
       this.fame = new SimpleStringProperty(fame);
       this.credit = new SimpleStringProperty(credit);
       this.rehearsals= new SimpleStringProperty(rehearsals);
-      
+      this.location = new SimpleStringProperty(Integer.toString(11));
+      this.enrolled = new SimpleStringProperty("F");
    }
+   public String getLocation(){
+      return location.get();
+      }
+   public void setLocation(String i){
+      location.set(i);
+      }   
+   public String getEnrolled(){
+      return enrolled.get();
+      }
+   public void setEnrolled(String i){
+      enrolled.set(i);
+      }   
+   
    public String getRehearsals(){//rehearsals getter
       return rehearsals.get();
       }
