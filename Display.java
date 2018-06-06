@@ -37,7 +37,6 @@ public class Display {
     private static Button doNothingButton;
     private static Button actButton;
     private static Button rehearseButton;
-    private static Button upgradeButton;
     private static Button onCardButton;
     private static Button offCardButton;
     private static Button noRoleButton;
@@ -90,7 +89,7 @@ public class Display {
         final int BOARD_HEIGHT = 900;
         final int WINDOW_WIDTH = 1800;
         final int WINDOW_HEIGHT = 1000;
-        final int LOC_REF_HEIGHT = 253;
+        final int LOC_REF_HEIGHT = 238;
         final int LOC_REF_WIDTH = 155;
         final int BUTT_HEIGHT = 30;
 
@@ -143,7 +142,7 @@ public class Display {
                                             playerNamesCnt++;
                                             if (playerNamesCnt < playerCnt) {
                                                 output.setText("Player " + (playerNamesCnt + 1) + "'s name?");
-                                            } else {                                   //Collected all player names, add all to players list
+                                            } else {                                  //Collected all player names, add all to players list
                                                 players.addPlayers(playerNames);
                                                 players.shuffle();                    //Randomize player order
                                                 playersOrdered = players;             //Store starting order of players for calculating winner later
@@ -239,6 +238,7 @@ public class Display {
                                                 shotsTable.setLayoutY(0);
                                                 shotsTable.setVisible(true);
                                                 shotsTable.setMaxHeight(266);
+                                                shotsTable.setMaxWidth(147);
                                                 root.getChildren().add(shotsTable);
 
                                                 currPlayerTable = new TableView<CurrPlayer>();
@@ -304,11 +304,17 @@ public class Display {
                                                     output.setStyle("-fx-border-color: red;");
                                                 } else {                                                                //Valid location
                                                     output.setStyle("-fx-border-color: green;");
-                                                    players.getCurrent().changeLocation(moveSel - 1);       //Update user's location
+                                                    players.getCurrent().changeLocation(moveSel - 1);                       //Update user's location
+                                                    players.getCurrent().resetRehearse();                               //Reset rehearse markers
                                                     stats.refresh();
                                                     currPlayer = players.getCurrent();
                                                     currLoc = currPlayer.getLocation();
+                                                    currSet = board.getRoom(currLoc);
+                                                    currCard = currSet.getCard();
                                                     if (currLoc == 10) {                                                //Trailers
+                                                        //Do nothing
+                                                        endTurn();                                                      //End user's turn
+                                                    } else if ((currLoc != 11) && (!currCard.isActive())){              //Scene wrapped previously
                                                         //Do nothing
                                                         endTurn();                                                      //End user's turn
                                                     } else if (currLoc == 11) {                                         //Casting Office
@@ -319,6 +325,7 @@ public class Display {
                                                         onCardButton.setVisible(true);                                  //Activate buttons
                                                         offCardButton.setVisible(true);
                                                         noRoleButton.setVisible(true);
+                                                        pState = PState.GET_ROLE_TYPE;
                                                         CardTableMaker tableMaker = new CardTableMaker();
                                                         onCard = tableMaker.getOnCard(board, players.getCurrent().getLocation());
                                                         offCard = tableMaker.getOffCard(board, players.getCurrent().getLocation());
@@ -417,6 +424,7 @@ public class Display {
                                                     moneyButton.setVisible(true);                       //Activate buttons
                                                     fameButton.setVisible(true);
                                                     noUpgradeButton.setVisible(true);
+                                                    pState = PState.UPGRADE_PAY;
                                                 }
                                             }
                                             break;
@@ -549,14 +557,14 @@ public class Display {
 
                                                 if (active.size() == 1) {                               //Advance day
                                                     daysLeft--;
-                                                    if (daysLeft > 0) {
+                                                    if (daysLeft > 3) {
                                                         output.setText("Day Completed! Days Remaining: " + daysLeft);
                                                         PauseTransition pauseDC = new PauseTransition(Duration.seconds(1));
+                                                        moderator.advanceDay();
                                                         pauseDC.setOnFinished(event ->
                                                                 endTurn()
                                                         );
                                                         pauseDC.play();
-                                                        moderator.advanceDay();
 
                                                     } else {                                             //No days left, end the game
                                                         Player winner = calculator.calcWinner(playersOrdered);
@@ -1061,7 +1069,6 @@ public class Display {
                 @Override
                 public void handle(ActionEvent e) {
                     cardChoiceSel = 1;
-                    pState = PState.GET_ROLE_TYPE;
                     synchronized (gameThread) {     //Alert gameThread that user clicked button
                         gameThread.notify();
                     }
@@ -1074,7 +1081,6 @@ public class Display {
                 @Override
                 public void handle(ActionEvent e) {
                     cardChoiceSel = 2;
-                    pState = PState.GET_ROLE_TYPE;
                     synchronized (gameThread) {     //Alert gameThread that user clicked button
                         gameThread.notify();
                     }
@@ -1087,7 +1093,6 @@ public class Display {
                     @Override
                     public void handle(ActionEvent e) {
                         cardChoiceSel = 3;
-                        pState = PState.GET_ROLE_TYPE;
                         synchronized (gameThread) {     //Alert gameThread that user clicked button
                             gameThread.notify();
                         }
@@ -1100,7 +1105,6 @@ public class Display {
                     @Override
                     public void handle(ActionEvent e) {
                         upgradeSel = 1;
-                        pState = PState.UPGRADE_PAY;
                         synchronized (gameThread) {     //Alert gameThread that user clicked button
                             gameThread.notify();
                         }
@@ -1113,7 +1117,6 @@ public class Display {
                     @Override
                     public void handle(ActionEvent e) {
                         upgradeSel = 2;
-                        pState = PState.UPGRADE_PAY;
                         synchronized (gameThread) {     //Alert gameThread that user clicked button
                             gameThread.notify();
                         }
