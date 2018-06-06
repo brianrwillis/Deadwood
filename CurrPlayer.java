@@ -7,8 +7,8 @@ public class CurrPlayer{
    private final SimpleStringProperty currPlayer;
    public CurrPlayer(){
    
-      this.currPlayer=new SimpleStringProperty("");;
-      }
+      this.currPlayer=new SimpleStringProperty("");
+   }
    public void setCurrPlayer(String I){
       currPlayer.set(I);
       }

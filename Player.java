@@ -107,8 +107,8 @@ class Player {
         this.onCard = true;
         this.person.setEnrolled("T");
     }
-    
+
     public Person getPerson(){
-      return this.person;}
+        return this.person;}
 
 }

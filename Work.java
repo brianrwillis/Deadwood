@@ -44,10 +44,7 @@ class Work {
             }
         }
 
-        if (location.getRemainingTakes() == 0) {
-            return true;
-        }
-        return false;
+        return location.getRemainingTakes() == 0;
     }
 
     //RandomNum:

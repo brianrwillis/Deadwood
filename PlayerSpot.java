@@ -8,7 +8,7 @@ class PlayerSpot {
     private String line;
     int xVal;
     int yVal;
-        private PSpotHolder pSpotHolder;
+    private PSpotHolder pSpotHolder;
 
     public PlayerSpot() {
         this.NeededRank = 0;
@@ -16,7 +16,7 @@ class PlayerSpot {
         this.onCard = new ArrayList<Player>(1);
         this.partName = null;
         this.line = null;
-                this.pSpotHolder=new PSpotHolder();
+        this.pSpotHolder=new PSpotHolder();
 
     }
 
@@ -24,12 +24,12 @@ class PlayerSpot {
     public void AddToPlayerSpot(int rank, String partName) {
         this.NeededRank = rank;
         this.partName = partName;
-                this.pSpotHolder.setNeededRank(Integer.toString(rank));
-        this.pSpotHolder.setPartName(partName);  
+        this.pSpotHolder.setNeededRank(Integer.toString(rank));
+        this.pSpotHolder.setPartName(partName);
     }
-       public PSpotHolder getPSpot(){
-      return this.pSpotHolder;
-      }
+    public PSpotHolder getPSpot(){
+        return this.pSpotHolder;
+    }
 
 
     public void AddToPlayerSpot(String line) {//makes line into line
@@ -37,22 +37,22 @@ class PlayerSpot {
     }
     //adds x coord of spot location
     public void addXVal(int x){
-      this.xVal=x;
-      }
-    //returns x coord of spot location  
+        this.xVal=x;
+    }
+    //returns x coord of spot location
     public int getXVal(){
-      return this.xVal;
-      }
-    
-    //adds y coord of spot location  
+        return this.xVal;
+    }
+
+    //adds y coord of spot location
     public void addYVal(int y){
-      this.yVal=y;
-      }
-      
-    //returns y coord of spot location  
+        this.yVal=y;
+    }
+
+    //returns y coord of spot location
     public int getYVal(){
-      return this.yVal;
-      }
+        return this.yVal;
+    }
     public boolean addPlayer(Player player) {//checks if player can be added, adds and returns true if possible
         if (this.onCard.size() < this.maxOccupants && player.getRank() >= this.NeededRank) {
             onCard.add(player);
@@ -78,10 +78,7 @@ class PlayerSpot {
 
     //Returns true if player can be added to role
     public boolean checkToAdd(Player player) {
-        if (this.onCard.size() < this.maxOccupants && player.getRank() >= this.NeededRank) {
-            return true;
-        }
-        return false;
+        return this.onCard.size() < this.maxOccupants && player.getRank() >= this.NeededRank;
     }
 
     //Returns name of role

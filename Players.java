@@ -49,7 +49,7 @@ class Players {
         String name=curr.getName();
         this.currPlayer.setCurrPlayer(name);
         return this.list.getFirst();
-        
+
     }
 
     public void reset() {//places each player back at the trailers
@@ -68,7 +68,7 @@ class Players {
         return this.nonQList;
     }
     public CurrPlayer getCurrPlayer(){
-      return this.currPlayer;}
+        return this.currPlayer;}
 
     //RandomNum:
     //in: int a int b
