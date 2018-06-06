@@ -1,3 +1,8 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.cell.PropertyValueFactory;
+import java.util.*;
+import javafx.beans.property.SimpleStringProperty;
 import java.util.*;
 
 class Room {
@@ -7,6 +12,7 @@ class Room {
     int yVal;
     ArrayList<Integer> TakeX;
     ArrayList<Integer> TakeY;
+    RoomDataStore store;
 
     public Room() {
         this.RoomName = null;
@@ -15,6 +21,7 @@ class Room {
         forAll.AddToPlayerSpot(8, null);
         this.TakeX=new ArrayList<Integer>();
         this.TakeY=new ArrayList<Integer>();
+        this.store=new RoomDataStore();
         
     }
 
@@ -26,7 +33,9 @@ class Room {
         forAll.AddToPlayerSpot(8, null);
         //addCardInfo();
         this.TakeX=new ArrayList<Integer>();
-        this.TakeY=new ArrayList<Integer>();        
+        this.TakeY=new ArrayList<Integer>();
+        this.store=new RoomDataStore();
+        this.store.setName(name);        
     }
     public void addTakeX(int x){
       this.TakeX.add(x);
@@ -58,6 +67,7 @@ class Room {
     //Change a room's name
     public void ChangeRoom(String name) {
         this.RoomName = name;
+        this.store.setName(name);
         addCardInfo();
     }
 //    0, Train Station
@@ -144,7 +154,7 @@ class Room {
 
     //Adjusting takes handled by Set.java
     public void adjustTakes() {//once a take is complete
-
+         
     }
 
     //Getting remaining takes handled by Set.java
@@ -157,4 +167,8 @@ class Room {
     public void addCard(SceneCard card) {
 
     }
+    
+    public RoomDataStore getStore(){
+      return this.store;
+      }
 }

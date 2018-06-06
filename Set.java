@@ -11,12 +11,14 @@ class Set extends Room {
         this.totalTakes = 0;
         this.remainingTakes = 0;
         this.offCard = new ArrayList<PlayerSpot>(1);
+        this.store=new RoomDataStore();
     }
 
-    //Changes room name
-    public void ChangeRoom(String name) {
-        this.RoomName = name;
-    }
+//     //Changes room name
+//     public void ChangeRoom(String name) {
+//         this.RoomName = name;
+//         this.store.setName(name);
+//     }
 
     //Adds player spot
     public void addPlayerSpot(ArrayList<PlayerSpot> playerSpot) {
@@ -36,6 +38,7 @@ class Set extends Room {
     public void reset() {//resets room to state at beginning of day
         super.reset();
         this.remainingTakes = this.totalTakes;
+        this.store.setShots(Integer.toString(totalTakes));
         this.card.resetCard();
         for (int i = 0; i < offCard.size(); i++) {
             PlayerSpot curr = offCard.get(i);
@@ -45,6 +48,7 @@ class Set extends Room {
 
     public void adjustTakes() {//once a take is complete, remove 1 from takes amount
         this.remainingTakes = this.remainingTakes - 1;
+        this.store.setShots(Integer.toString(this.remainingTakes));
     }
 
     public void addCard(SceneCard card) {//adds a card to the set
@@ -72,5 +76,6 @@ class Set extends Room {
     public void setTakes(int i) {//initializes number of takes
         this.totalTakes = i;
         this.remainingTakes = i;
+        this.store.setShots(Integer.toString(i));
     }
 }
