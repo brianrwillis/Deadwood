@@ -43,6 +43,7 @@ public class CardTableMaker{//Creates and returns tables of playerspots given th
          curr.getPSpot().setNumber(Integer.toString(i+1));
          data1.addAll(curr.getPSpot());
       }
+      //Begin making table
       TableView table=new TableView<PSpotHolder>();
       table.setEditable(true);      
       TableColumn big=new TableColumn("On Card");
@@ -60,6 +61,7 @@ public class CardTableMaker{//Creates and returns tables of playerspots given th
       PRankCol.setMaxWidth(130);      
       table.setItems(data1);      
       big.getColumns().addAll(PNum, PNameCol, PRankCol);
+      //set table attributes
       table.setLayoutX(0);
       table.setLayoutY(400);        
       table.setMaxHeight(200); 
@@ -82,6 +84,7 @@ public class CardTableMaker{//Creates and returns tables of playerspots given th
          curr.getPSpot().setNumber(Integer.toString(i+1));
          data1.addAll(curr.getPSpot());
       }
+      //begin making table
       TableView table=new TableView<PSpotHolder>();
       table.setEditable(true);
       TableColumn big=new TableColumn("Off Card");
@@ -100,6 +103,7 @@ public class CardTableMaker{//Creates and returns tables of playerspots given th
       table.setItems(data1);
       big.getColumns().addAll(PNum, PNameCol, PRankCol);
       table.getColumns().addAll(big);
+      //set table attributes
       table.setMaxWidth(302);
       table.setMinWidth(301);
       table.setLayoutX(0);

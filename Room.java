@@ -37,16 +37,16 @@ class Room {
         this.store=new RoomDataStore();
         this.store.setName(name);
     }
-    public void addTakeX(int x){
+    public void addTakeX(int x){//adds x coord of take counter location
         this.TakeX.add(x);
     }
-    public void addTakeY(int y){
+    public void addTakeY(int y){//adds y coord of take counter location
         this.TakeY.add(y);
     }
-    public ArrayList<Integer> getXTakes(){
+    public ArrayList<Integer> getXTakes(){//returns x coords of take counter
         return this.TakeX;
     }
-    public ArrayList<Integer> getYTakes(){
+    public ArrayList<Integer> getYTakes(){//returns y coords of take counter
         return this.TakeY;
     }
 

@@ -3,7 +3,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.*;
 import javafx.beans.property.SimpleStringProperty;
-public class CurrPlayer{
+public class CurrPlayer{//extremely simple class with a single string(name of current player) with a getter and setter
    private final SimpleStringProperty currPlayer;
    public CurrPlayer(){
    

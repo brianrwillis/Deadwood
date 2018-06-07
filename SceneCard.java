@@ -32,14 +32,15 @@ class SceneCard {
     public int getCost() {
         return this.sceneCost;
     }
-    
+    //Sets flipped to true
     public void flip(){
       this.flipped=true;
       }
+    //sets flipped to false
     public void unFlip(){
       this.flipped=false;
       }
-      
+    //returns flipped
     public boolean isFlipped(){
       return this.flipped;
       }    

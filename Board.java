@@ -41,7 +41,7 @@ class Board {
         return this.realBoard.get(location);
     }
 
-    public void initialize() throws ParserConfigurationException {
+    public void initialize() throws ParserConfigurationException {//Begin XML parse
         Document curr = getDocFromFile("board.xml");
         getBoardData(curr);
     }
@@ -62,7 +62,7 @@ class Board {
             return doc;
         } // exception handling
     }
-
+    //XML parser
     private void getBoardData(Document d) {
         Element root = d.getDocumentElement();
         NodeList sets = root.getElementsByTagName("set");

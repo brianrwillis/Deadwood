@@ -3,7 +3,7 @@ import javafx.application.*;
 
 public class Deadwood extends Application {
     private static Display display = new Display(); //View/Controller
-
+    //Display contains vast majority of code.
     public Deadwood() {
     }
 

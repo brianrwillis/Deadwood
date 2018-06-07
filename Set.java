@@ -14,11 +14,7 @@ class Set extends Room {
         this.store=new RoomDataStore();
     }
 
-//     //Changes room name
-//     public void ChangeRoom(String name) {
-//         this.RoomName = name;
-//         this.store.setName(name);
-//     }
+
 
     //Adds player spot
     public void addPlayerSpot(ArrayList<PlayerSpot> playerSpot) {

@@ -67,7 +67,7 @@ class Deck {
         return order.poll();
     }
 
-    private void initialize() throws ParserConfigurationException {
+    private void initialize() throws ParserConfigurationException {//begins filling deck. Calls XML parsing methods.
         Document curr = getDocFromFile("cards.xml");
         getDeckData(curr);
     }
@@ -98,7 +98,7 @@ class Deck {
             return doc;
         } // exception handling
     }
-
+    //XML parser
     private void getDeckData(Document d) {
         Element root = d.getDocumentElement();
         NodeList cards = root.getElementsByTagName("card");

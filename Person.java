@@ -23,16 +23,16 @@ public  class Person {//Class that holds properties of Player to ease importing 
       this.location = new SimpleStringProperty(Integer.toString(11));
       this.enrolled = new SimpleStringProperty("F");
    }
-   public String getLocation(){
+   public String getLocation(){//location getter
       return location.get();
       }
-   public void setLocation(String i){
+   public void setLocation(String i){//location setter
       location.set(i);
       }   
-   public String getEnrolled(){
+   public String getEnrolled(){//enrollment getter
       return enrolled.get();
       }
-   public void setEnrolled(String i){
+   public void setEnrolled(String i){//enrollment setter
       enrolled.set(i);
       }   
    
