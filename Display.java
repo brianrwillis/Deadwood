@@ -577,13 +577,17 @@ public class Display {
                                            currCard.resetCard();
                                            active.trimToSize();//makes sure finished card was taken out of active card list
                                         
-                                           if (active.size() == 1) {                               //Advance day
+                                           if (active.size() == 9) {                               //Advance day
                                               daysLeft--;
                                               if (daysLeft > 1) {
                                                  output.setText("Day Completed! Days Remaining: " + daysLeft);
                                                  board.reset();
                                                  players.reset();
                                                  deck.reset();
+                                                 for(int i=0; i<10; i++){
+                                                   Room resetRoom=board.getRoom(i);
+                                                   resetRoom.addCard(deck.getTopofOrder());
+                                                   }
                                                  PauseTransition pauseDC = new PauseTransition(Duration.seconds(1));
                                               
                                               

@@ -56,6 +56,7 @@ class Players {
         for (int i = 0; i < nonQList.size(); i++) {
             Player curr = this.nonQList.get(i);
             curr.remFromCard();
+            curr.resetRehearse();
             curr.changeLocation(10);
         }
     }
