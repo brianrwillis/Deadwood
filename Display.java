@@ -68,6 +68,7 @@ public class Display {
    private static int playerCnt;
    private static String[] playerNames;
    private static int playerNamesCnt = 0;
+   private static int upgradeNumSel = 0;
 
    //Other class instances
    private static Players players = null;
@@ -89,7 +90,7 @@ public class Display {
       final int BOARD_HEIGHT = 900;
       final int WINDOW_WIDTH = 1800;
       final int WINDOW_HEIGHT = 1000;
-      final int LOC_REF_HEIGHT = 238;
+      final int LOC_REF_HEIGHT = 252;
       final int LOC_REF_WIDTH = 155;
       final int BUTT_HEIGHT = 30;
    
@@ -240,7 +241,7 @@ public class Display {
                                            shotsTable.setLayoutY(0);
                                            shotsTable.setVisible(true);
                                            shotsTable.setMaxHeight(266);
-                                           shotsTable.setMaxWidth(147);
+                                           shotsTable.setMaxWidth(250);
                                            root.getChildren().add(shotsTable);
                                         
                                            currPlayerTable = new TableView<CurrPlayer>();
@@ -423,7 +424,7 @@ public class Display {
                                      //Test input bounds and upgrade amount validity
                                         if (validNumInput(inputText, 1, 5)) {
                                            currPlayer = players.getCurrent();
-                                           int upgradeNumSel = Integer.parseInt(inputText);
+                                           upgradeNumSel = Integer.parseInt(inputText);
                                            if ((currPlayer.getRank() + upgradeNumSel) > 6) {
                                               output.setText("You can only upgrade to a max rank of 6.");
                                               output.setStyle("-fx-border-color: red;");
@@ -471,6 +472,7 @@ public class Display {
                                            if (players.getCurrent().getCredit() < moneyCost) {
                                               output.setText("Not enough money to perform upgrade. Upgrade how many ranks?");
                                               output.setStyle("-fx-border-color: red;");
+                                              upgradeNumSel = 0;
                                               pState = PState.GET_UPGRADE_NUM;
                                            } 
                                            else {
@@ -557,7 +559,13 @@ public class Display {
                                         if (complete) {
                                            currSet = board.getRoom(currLoc);
                                            currCard = currSet.getCard();
-                                        
+                                           ArrayList<Player> toTakeRehearse=players.getPlayers();
+                                           for(int i=0; i<toTakeRehearse.size();i++){
+                                             if(toTakeRehearse.get(i).getLocation()==currLoc){
+                                             toTakeRehearse.get(i).resetRehearse();
+                                             toTakeRehearse.get(i).remFromCard();
+                                             }
+                                             }
                                            currCard.resetCard();
                                            moderator.advanceScene(currSet);                        //Advance scene
                                            ArrayList<SceneCard> active = deck.getActiveCard();
@@ -577,9 +585,9 @@ public class Display {
                                            currCard.resetCard();
                                            active.trimToSize();//makes sure finished card was taken out of active card list
                                         
-                                           if (active.size() == 9) {                               //Advance day
+                                           if (active.size() == 1) {                               //Advance day
                                               daysLeft--;
-                                              if (daysLeft > 1) {
+                                              if (daysLeft > 0) {
                                                  output.setText("Day Completed! Days Remaining: " + daysLeft);
                                                  board.reset();
                                                  players.reset();
@@ -1162,6 +1170,9 @@ public class Display {
                 new EventHandler<ActionEvent>() {
                    @Override
                    public void handle(ActionEvent e) {
+                      moneyButton.setVisible(false);                          //Deactivate buttons
+                      fameButton.setVisible(false);
+                      noUpgradeButton.setVisible(false);
                       endTurn();                      //End user's turn
                       output.setStyle("-fx-border-color: green;");
                    }
