@@ -1,7 +1,0 @@
-﻿Oscar Dawson, Brian Willis
-
-Class Diagram Rationale:
-
-In our project, the Model-View-Controller design pattern is implemented. The classes Deck, Room, PlayerSpot, and Board represent the Model, PlayerSpotPrinter and Display represent the View, and Moderator, Calculator, and Work represent the Controller. The main program utilizes Players, Board, Moderator, Deck, Room, Calculator, PlayerSpot, and Work to control the game, while SceneCard, Set, and Player are controlled by other classes.
-
-Player has a death-relationship to Players as Players contains Player but does not inherit its attributes or methods (Player is not a Players, so this relationship is not inheritance). This composition is present for SceneCard with Deck as well as Set with Room for the same reasons. Display and PlayerSpot are two separate interfaces as they communicate with separate classes.
